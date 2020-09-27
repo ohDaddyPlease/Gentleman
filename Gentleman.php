@@ -8,6 +8,7 @@ require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Dotenv\Dotenv;
+use InvalidArgumentException;
 
 class Gentleman
 {
