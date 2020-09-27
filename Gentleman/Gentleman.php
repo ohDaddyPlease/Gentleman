@@ -41,7 +41,7 @@ class Gentleman
             throw new RuntimeException($configurationLogMessage);
         }
 
-        define('ENV_FILE', '../.env');
+        define('ENV_FILE', '.env');
         if (!is_file(ENV_FILE))
         {
             $envFileLogMessage = '.env файл не найден и будет сгенерирован ...';
@@ -50,7 +50,7 @@ class Gentleman
         }
 
         $dotenv = new Dotenv();
-        $dotenv->load(__DIR__ . DIRECTORY_SEPARATOR . ENV_FILE);
+        $dotenv->load(ENV_FILE);
 
         define('APP_NAME', $_ENV['APP_NAME'] ?? 'dev');
         define('START_POINT', $_ENV['START_POINT'] ?? 'index.php');
