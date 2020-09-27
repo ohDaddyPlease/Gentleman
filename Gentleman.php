@@ -13,6 +13,7 @@ use InvalidArgumentException;
 class Gentleman
 {
 
+    /** @var Logger logger */
     public static $logger;
 
     private function __construct(){}
