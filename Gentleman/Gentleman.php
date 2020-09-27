@@ -9,7 +9,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use RuntimeException;
 use Symfony\Component\Dotenv\Dotenv;
-use InvalidArgumentException;
+use Exception;
 
 class Gentleman
 {
@@ -70,6 +70,15 @@ class Gentleman
 
     public static function run(): void
     {
-        require_once self::$startPoint;
+        try {
+            require_once self::$startPoint;
+        } catch (Exception $e) {
+            self::$logger->error(
+                'Message: '. $e->getMessage() . PHP_EOL .
+                'File: ' . $e->getFile() . PHP_EOL .
+                'Line: ' . $e->getLine() . PHP_EOL .
+                'Trace: ' . $e->getTraceAsString() . PHP_EOL
+            );
+        }
     }
 }
