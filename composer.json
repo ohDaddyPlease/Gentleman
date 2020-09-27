@@ -9,5 +9,8 @@
             "email": "kraspvp@mail.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/dotenv": "^5.1",
+        "monolog/monolog": "^2.1"
+    }
 }
