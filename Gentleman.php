@@ -1,5 +1,7 @@
 <?php
 
+namespace Gentleman;
+
 require __DIR__ . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
 
