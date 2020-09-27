@@ -3,5 +3,5 @@ vendor/
 test/
 logs/
 *.log
-index.php
+app/
 .env

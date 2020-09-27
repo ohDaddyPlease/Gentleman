@@ -2,7 +2,7 @@
 
 namespace Gentleman;
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
+require 'vendor/autoload.php';
 require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
 
 use Monolog\Logger;
@@ -20,12 +20,17 @@ class Gentleman
     /** @var int был ли вызван метод configure */
     private static $configured = 0;
 
+    /** @var string входной файл из папки app */
+    private static $startPoint;
+
     private function __construct(){}
 
-    public static function configure()
+    public static function configure(): void
     {
         define('CONFIGURATION_NAME', 'configuration');
-        define('CONFIGURATION_LOG_PATH', __DIR__ . DIRECTORY_SEPARATOR . CONFIGURATION_NAME . '.log');
+        define('CONFIGURATION_LOG_PATH',
+               'logs' . DIRECTORY_SEPARATOR . CONFIGURATION_NAME . '.log'
+        );
 
         $configurationLog = new Logger(CONFIGURATION_NAME);
         $configurationLog->pushHandler(new StreamHandler(CONFIGURATION_LOG_PATH, Logger::INFO));
@@ -36,31 +41,35 @@ class Gentleman
             throw new RuntimeException($configurationLogMessage);
         }
 
-        define('ENV_FILE', '.env');
+        define('ENV_FILE', '../.env');
         if (!is_file(ENV_FILE))
         {
             $envFileLogMessage = '.env файл не найден и будет сгенерирован ...';
             generateEnvFile();
             $configurationLog->warning($envFileLogMessage);
-            throw new InvalidArgumentException($envFileLogMessage);
         }
 
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . DIRECTORY_SEPARATOR . ENV_FILE);
 
-        if (isset($_ENV['APP_NAME']) && !empty($_ENV['APP_NAME'])) {
-            define('APP_NAME', $_ENV['APP_NAME']);
-            define('APP_LOG_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . APP_NAME . '.log');
-            self::$logger = (new Logger(APP_NAME))->pushHandler(
-                new StreamHandler(APP_LOG_PATH, Logger::INFO)
-            );
-        } else {
-            $appNameLogMessage = 'Не установлен параметр APP_NAME';
-            $configurationLog->error($appNameLogMessage);
-            throw new InvalidArgumentException($appNameLogMessage);
-        }
+        define('APP_NAME', $_ENV['APP_NAME'] ?? 'dev');
+        define('START_POINT', $_ENV['START_POINT'] ?? 'index.php');
+        define('APP_LOG_PATH', 'logs' . DIRECTORY_SEPARATOR . APP_NAME . '.log');
+        self::$logger = (new Logger(APP_NAME))->pushHandler(
+            new StreamHandler(APP_LOG_PATH, Logger::INFO)
+        );
 
         $configurationLog->close();
         self::$configured = 1;
+    }
+
+    public static function registerStartPoint(string $point): void
+    {
+        self::$startPoint = 'app' . DIRECTORY_SEPARATOR . $point;
+    }
+
+    public static function run(): void
+    {
+        require_once self::$startPoint;
     }
 }
