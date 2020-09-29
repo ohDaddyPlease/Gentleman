@@ -59,6 +59,13 @@ class Gentleman
             new StreamHandler(APP_LOG_PATH, Logger::INFO)
         );
 
+        self::registerStartPoint(START_POINT);
+        $configurationLog->close();
+        self::$configured = 1;
+
+        /*
+        * Errors
+        */
         $errorsHandler = static function ($code, $description) {
             self::$logger->warning($description);
         };
@@ -75,9 +82,6 @@ class Gentleman
             throw $e;
         };
         set_exception_handler($exceptionsHandler);
-
-        $configurationLog->close();
-        self::$configured = 1;
     }
 
     public static function registerStartPoint(string $point): void
