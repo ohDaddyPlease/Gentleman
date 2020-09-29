@@ -1,6 +1,6 @@
 <?php
 
-function generateNecessaryDirAndFilds()
+function generateNecessaryDirAndFiles()
 {
     generateEnvFile();
     generateLogsDir();

@@ -59,6 +59,23 @@ class Gentleman
             new StreamHandler(APP_LOG_PATH, Logger::INFO)
         );
 
+        $errorsHandler = static function ($code, $description) {
+            self::$logger->warning($description);
+        };
+        set_error_handler($errorsHandler);
+
+        $exceptionsHandler = static function ($e) {
+            self::$logger->error(
+                'Message: '. $e->getMessage() . PHP_EOL .
+                'File: ' . $e->getFile() . PHP_EOL .
+                'Line: ' . $e->getLine() . PHP_EOL .
+                'Trace: ' . $e->getTraceAsString() . PHP_EOL
+            );
+
+            throw $e;
+        };
+        set_exception_handler($exceptionsHandler);
+
         $configurationLog->close();
         self::$configured = 1;
     }
@@ -70,15 +87,6 @@ class Gentleman
 
     public static function run(): void
     {
-        try {
-            require_once self::$startPoint;
-        } catch (Exception $e) {
-            self::$logger->error(
-                'Message: '. $e->getMessage() . PHP_EOL .
-                'File: ' . $e->getFile() . PHP_EOL .
-                'Line: ' . $e->getLine() . PHP_EOL .
-                'Trace: ' . $e->getTraceAsString() . PHP_EOL
-            );
-        }
+        require_once self::$startPoint;
     }
 }
