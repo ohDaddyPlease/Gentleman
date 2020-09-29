@@ -31,3 +31,19 @@ function generateAppDir()
         throw new \RuntimeException(sprintf('Directory "%s" was not created', 'app'));
     }
 }
+
+function generate404()
+{
+    if (!is_dir('var') && !mkdir('var')) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', 'logs'));
+    }
+
+    $notFound = <<<text
+    <?php
+    echo '404 error';
+    text;
+
+    file_put_contents('var/404.php', $notFound);
+    
+    return 'var/404.php';
+}

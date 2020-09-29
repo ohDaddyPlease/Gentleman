@@ -4,5 +4,9 @@ require 'Gentleman/Gentleman.php';
 
 use Gentleman\Gentleman;
 
-Gentleman::configure();
-Gentleman::run();
+try {
+    Gentleman::configure();
+    Gentleman::run();
+}catch(Exception $e) {
+    Gentleman::$logger->error($e->getMessage());
+}
