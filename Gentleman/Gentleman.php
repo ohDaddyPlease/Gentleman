@@ -4,12 +4,14 @@ namespace Gentleman;
 
 require 'vendor/autoload.php';
 require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'Routing' . DIRECTORY_SEPARATOR . 'Router.php';
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use RuntimeException;
 use Symfony\Component\Dotenv\Dotenv;
 use Exception;
+use Routing\Router;
 
 class Gentleman
 {
@@ -19,9 +21,6 @@ class Gentleman
 
     /** @var int был ли вызван метод configure */
     private static $configured = 0;
-
-    /** @var string входной файл из папки app */
-    private static $startPoint;
 
     private function __construct(){}
 
@@ -83,21 +82,8 @@ class Gentleman
         set_exception_handler($exceptionsHandler);
     }
 
-    public static function registerStartPoint(string $point): void
-    {
-        self::$startPoint = 'app' . DIRECTORY_SEPARATOR . $point;
-
-        if (!is_file(self::$startPoint)) {
-            $notFoundFilePath = 'app' . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . '404.php';
-            self::$startPoint = is_file($notFoundFilePath) ? $notFoundFilePath : generate404();
-        }
-    }
-
     public static function run(): void
     {
-        $path = explode('/', trim($_SERVER['PATH_INFO'], '/'));
-        self::registerStartPoint($path[0] ? $path[0] . '.php' : START_POINT);
-
-        require_once self::$startPoint;
+        Router::resolveRoute();
     }
 }
