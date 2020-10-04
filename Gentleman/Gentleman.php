@@ -2,18 +2,15 @@
 
 namespace Gentleman;
 
-require 'vendor/autoload.php';
 require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Routing' . DIRECTORY_SEPARATOR . 'Router.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Logging' . DIRECTORY_SEPARATOR . 'Logger.php';
 
 use RuntimeException;
 
 use Symfony\Component\Dotenv\Dotenv;
 use Monolog\Handler\StreamHandler;
 
-use Routing\Router;
-use Logging\Logger;
+use Gentleman\Routing\Router;
+use Gentleman\Logging\Logger;
 
 class Gentleman
 {

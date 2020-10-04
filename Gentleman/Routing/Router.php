@@ -1,6 +1,6 @@
 <?php
 
-namespace Routing;
+namespace Gentleman\Routing;
 
 class Router
 {

@@ -1,10 +1,7 @@
 <?php
 
-namespace Logging;
-
-require 'vendor/autoload.php';
+namespace Gentleman\Logging;
 
 use Monolog\Logger as monologLogger;
-use Monolog\Handler\StreamHandler;
 
 class Logger extends monologLogger{}

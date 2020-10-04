@@ -15,7 +15,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Gentleman\\":"Gentleman/"
+            "Gentleman\\": "Gentleman/",
+            "Gentleman\\Logging\\": "Gentleman/Logging",
+            "Gentleman\\Routing\\": "Gentleman/Routing"
         }
     }
 }

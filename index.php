@@ -1,6 +1,6 @@
 <?php
 
-require 'Gentleman/Gentleman.php';
+require 'vendor/autoload.php';
 
 use Gentleman\Gentleman;
 
