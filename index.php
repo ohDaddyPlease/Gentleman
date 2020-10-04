@@ -8,6 +8,6 @@ use Gentleman\Gentleman;
 try {
     Gentleman::configure();
     Gentleman::run();
-}catch(Exception $e) {
+}catch(\Throwable $e) {
     Gentleman::$logger->error($e->getMessage());
 }

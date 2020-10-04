@@ -23,12 +23,7 @@ class Gentleman
 
     public static function configure(): void
     {
-        define('CONFIGURATION_NAME', 'configuration');
-        define('CONFIGURATION_LOG_PATH',
-               'logs' . DIRECTORY_SEPARATOR . CONFIGURATION_NAME . '.log'
-        );
-
-        $configurationLog = new Logger(CONFIGURATION_NAME);
+        $configurationLog = new Logger('configuration');
         $configurationLog->pushHandler(new StreamHandler(CONFIGURATION_LOG_PATH, Logger::INFO));
 
         if (self::$configured) {
@@ -37,8 +32,7 @@ class Gentleman
             throw new RuntimeException($configurationLogMessage);
         }
 
-        define('ENV_FILE', '.env');
-        if (!is_file(ENV_FILE))
+        if (!is_file(ENV_FILE_NAME))
         {
             $envFileLogMessage = '.env файл не найден и будет сгенерирован ...';
             generateEnvFile();
@@ -46,11 +40,10 @@ class Gentleman
         }
 
         $dotenv = new Dotenv();
-        $dotenv->load(ENV_FILE);
+        $dotenv->load(ENV_FILE_NAME);
 
         define('APP_NAME', $_ENV['APP_NAME'] ?? 'dev');
         define('START_POINT', $_ENV['START_POINT'] ?? 'index.php');
-        define('APP_LOG_PATH', 'logs' . DIRECTORY_SEPARATOR . APP_NAME . '.log');
         self::$logger = (new Logger(APP_NAME))->pushHandler(
             new StreamHandler(APP_LOG_PATH, Logger::INFO)
         );
@@ -66,7 +59,7 @@ class Gentleman
         };
         set_error_handler($errorsHandler);
 
-        $exceptionsHandler = static function ($e) {
+        $exceptionsHandler = static function (\Throwable $e) {
             self::$logger->error(
                 'Message: '. $e->getMessage() . PHP_EOL .
                 'File: ' . $e->getFile() . PHP_EOL .
