@@ -38,10 +38,10 @@ function generate404()
         throw new \RuntimeException(sprintf('Directory "%s" was not created', 'logs'));
     }
 
-    $notFound = <<<text
+    $notFound = <<<TEXT
     <?php
     echo '404 error';
-    text;
+TEXT;
 
     file_put_contents('var/404.php', $notFound);
     

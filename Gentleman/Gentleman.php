@@ -2,8 +2,6 @@
 
 namespace Gentleman;
 
-require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
-
 use Gentleman\Routing\Router;
 use Gentleman\Logging\Logger;
 

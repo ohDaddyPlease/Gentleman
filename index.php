@@ -1,6 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'Gentleman/functions.php';
 
 use Gentleman\Gentleman;
 
