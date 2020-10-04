@@ -12,5 +12,10 @@
     "require": {
         "symfony/dotenv": "^5.1",
         "monolog/monolog": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            ""
+        }
     }
 }

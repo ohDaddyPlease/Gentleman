@@ -1,7 +1,16 @@
+# include folders
 vendor/
 .idea/
 test/
-logs/
+
+# include folders exclude contents
+app/**/
+app/*.*
+logs/*
+
+# files
 *.log
-app/
 .env
+
+# exclude files/folders
+!.gitkeeper
