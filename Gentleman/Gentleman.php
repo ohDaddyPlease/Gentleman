@@ -4,13 +4,13 @@ namespace Gentleman;
 
 require __DIR__. DIRECTORY_SEPARATOR . 'functions.php';
 
-use RuntimeException;
+use Gentleman\Routing\Router;
+use Gentleman\Logging\Logger;
 
 use Symfony\Component\Dotenv\Dotenv;
 use Monolog\Handler\StreamHandler;
 
-use Gentleman\Routing\Router;
-use Gentleman\Logging\Logger;
+use RuntimeException;
 
 class Gentleman
 {
