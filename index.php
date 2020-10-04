@@ -1,7 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
-require 'Gentleman/functions.php';
+require 'Gentleman/auxiliary/auxiliary.php';
 
 use Gentleman\Gentleman;
 
